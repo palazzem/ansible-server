@@ -1,0 +1,37 @@
+---
+
+# we need these to support PythonZ installations
+- name: Install Python dependency libraries
+  yum: pkg={{item}} state=present
+    with_items:
+      - zlib-devel
+      - bzip2-devel
+      - openssl-devel
+      - ncurses-devel
+      - sqlite-devel
+      - readline-devel
+      - tk-devel
+      - libjpeg-devel
+
+- name: Install nginx and pals
+  yum: name={{ item }} state=present
+    with_items:
+     - nginx
+     - git
+
+- name: Insert iptables rule for httpd
+  lineinfile: dest=/etc/sysconfig/iptables create=yes state=present regexp="{{ httpd_port }}" insertafter="^:OUTPUT "
+              line="-A INPUT -p tcp  --dport {{ httpd_port }} -j ACCEPT"
+  notify: restart iptables
+
+- name: Create application user and ssh keys
+  user: name={{ user_name }} password={{ user_pass }} generate_ssh_key=yes
+
+- name: Create public directory to serve static files
+  file: path=/home/{{ user_name }}/public owner={{ user_name }} group={{ user_name }} mode=0755 state=directory
+
+- name: Make user's home dir xecutable  
+  file: path=/home/{{ user_name }} mode=0755 state=directory
+
+- name: Start nginx at boot time
+  service: name=nginx state=started enabled=yes
