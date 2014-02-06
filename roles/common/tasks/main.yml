@@ -1,0 +1,24 @@
+---
+# This playbook contains common plays that will be run on all nodes.
+
+- name: Configuring EPEL repositories
+  shell: rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm creates=/etc/yum.repos.d/epel.repo
+
+- name: Update system
+  yum: name=* state=latest
+
+- name: Reboot the server
+  command: /sbin/reboot -t now
+
+- name: Install development tools
+  yum: name="@Development tools" state=present
+
+- name: Configuring firewall forwarding
+  copy: src=common/files/firewall_rules.conf dest=/etc/sysconfig/iptables owner=root group=root mode=0600
+  notify:
+    - restart iptables
+
+- name: Test to see if selinux is running
+  command: getenforce
+  register: sestatus
+  changed_when: false
