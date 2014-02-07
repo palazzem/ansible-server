@@ -1,8 +1,11 @@
 ---
 # This playbook contains common plays that will be run on all nodes.
 
-- name: Configuring EPEL repositories
-  shell: rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm creates=/etc/yum.repos.d/epel.repo
+- name: Create the EPEL Repository.
+  copy: src=epel.repo.j2 dest=/etc/yum.repos.d/epel.repo
+
+- name: Create the GPG key for EPEL
+  copy: src=RPM-GPG-KEY-EPEL-6 dest=/etc/pki/rpm-gpg
 
 - name: Update system
   yum: name=* state=latest
