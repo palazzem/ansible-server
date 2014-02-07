@@ -13,10 +13,9 @@
 - name: Install development tools
   yum: name="@Development tools" state=present
 
-- name: Configuring firewall forwarding
-  copy: src=common/files/firewall_rules.conf dest=/etc/sysconfig/iptables owner=root group=root mode=0600
-  notify:
-    - restart iptables
+- name: Deploy basic iptables rules
+  template: src=iptables-save dest=/etc/sysconfig/iptables
+  notify: restart iptables
 
 - name: Test to see if selinux is running
   command: getenforce
