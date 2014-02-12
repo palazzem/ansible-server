@@ -1,0 +1,23 @@
+---
+# Configuration of postgresql server
+
+- name: Installing postgresql server
+  yum: name=postgresql-server,python-psycopg2,postgresql-devel state=latest
+
+- name: Database initialization
+  command: service postgresql initdb creates=/var/lib/pgsql/data/pg_hba.conf
+
+- name: Starting postgresql service
+  action: service name=postgresql state=started
+
+- name: Starting postgresql on boot
+  service: name=postgresql enabled=yes
+
+- name: Configuring postgres user
+  ignore_errors: yes
+  postgresql_user: user=postgres password=$psqlpassword state=present
+  sudo_user: postgres
+
+- name: Copying default configuration files
+  copy: src=common/files/pg_hba.conf dest=/var/lib/pgsql/data/pg_hba.conf owner=postgres group=postgres mode=0600 backup=yes
+  notify: restart postgres
