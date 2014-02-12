@@ -1,0 +1,6 @@
+---
+
+httpd_port: 80
+user_name: devel
+user_pass: 123456
+python_version: 2.7.6
