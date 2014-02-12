@@ -23,5 +23,7 @@
   user: {{ user_name }}
   sudo: False
 
-- name: Install Python
+- name: Install CPython
   action: pythonz install {{ python_version }}
+  user: {{ user_name }}
+  sudo: False
