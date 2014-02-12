@@ -2,7 +2,10 @@
 # Configuration of postgresql server
 
 - name: Installing postgresql server
-  yum: name=postgresql-server,python-psycopg2,postgresql-devel state=latest
+  yum: pkg={{item}} state=present
+    with_items:
+      - postgresql-server
+      - postgresql-devel
 
 - name: Database initialization
   command: service postgresql initdb creates=/var/lib/pgsql/data/pg_hba.conf
@@ -15,9 +18,14 @@
 
 - name: Configuring postgres user
   ignore_errors: yes
-  postgresql_user: user=postgres password=$psqlpassword state=present
+  postgresql_user: user=postgres password={{ psql_pass }} state=present
   sudo_user: postgres
 
 - name: Copying default configuration files
-  copy: src=common/files/pg_hba.conf dest=/var/lib/pgsql/data/pg_hba.conf owner=postgres group=postgres mode=0600 backup=yes
+  copy: src=pg_hba.conf dest=/var/lib/pgsql/data/pg_hba.conf owner=postgres group=postgres mode=0600 backup=yes
   notify: restart postgres
+
+- name: Insert iptables rule for nginx
+  lineinfile: dest=/etc/sysconfig/iptables create=yes state=present regexp="{{ httpd_port }}" insertafter="^:OUTPUT "
+              line="-A INPUT -p tcp  --dport 5432 -j ACCEPT"
+  notify: restart iptables
