@@ -5,36 +5,32 @@
 
 - name: apply common configuration to all nodes
   hosts: all
-  user: root
 
   roles:
     - common
 
 - name: install Python on webservers
   hosts: appservers
-  user: root
 
   roles:
     - python
 
 - name: configure http server
   hosts: appservers
-  user: root
 
   roles:
     - nginx
 
 - name: install gunicorn on a virtualenv
   hosts: appservers
-  user: {{ user_name }}
-  sudo: False
+  sudo: True
+  sudo_user: "{{ user_name }}"
 
   roles:
     - gunicorn
 
 - name: configure and deploy dbservers
   hosts: dbservers
-  user: root
 
   roles:
     - postgres
