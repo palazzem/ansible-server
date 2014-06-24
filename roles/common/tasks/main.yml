@@ -13,6 +13,11 @@
 - name: Update system
   yum: name=* state=latest
 
+# TODO: be sure SELinux is running and configure it properly
+
+- name: disable SELinux
+  selinux: state=disabled
+
 - name: Reboot the server
   command: /sbin/reboot
 
@@ -26,7 +31,7 @@
   template: src=iptables-save dest=/etc/sysconfig/iptables
   notify: restart iptables
 
-- name: Test to see if selinux is running
-  command: getenforce
-  register: sestatus
-  changed_when: false
+#- name: Test to see if selinux is running
+#  command: getenforce
+#  register: sestatus
+#  changed_when: false
