@@ -1,7 +1,7 @@
 ---
 # Task for setting up Python and relative dev tools
-
 # we need these to support PythonZ installations
+
 - name: Install Python dependency libraries
   yum: pkg="{{item}}" state=present
   with_items:
