@@ -34,3 +34,11 @@
 
   roles:
     - postgres
+
+- name: configure supervisor
+  hosts: appservers
+  sudo: True
+  sudo_user: "{{ user_name }}"
+
+  roles:
+    - supervisor

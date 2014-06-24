@@ -1,0 +1,27 @@
+---
+
+- name: Create virtualenv
+  shell: mkvirtualenv {{ app_name }} | bash
+
+- name: Install supervisor
+  pip: name=supervisor virtualenv=~/.virtualenvs/{{ app_name }}
+
+- name: Create some useful directory to store bins, configurations and logs
+  file: path=/home/{{ user_name }}{{item}} owner={{ user_name }} group={{ user_name }} mode=0700 state=directory
+  with_items:
+   - /bin
+   - /etc
+   - /var/log
+   - /var/run
+
+- name: Copy 'runinenv' script
+  copy: src=runinenv.sh dest=~/bin/runinenv.sh mode=0700
+
+- name: Create a supervisor configuration
+  template: src=supervisord.conf.j2 dest=~/etc/supervisord_{{ app_name }}.conf mode=0600
+
+- name: Configure crontab to start supervisor on reboot
+  sudo: True
+  sudo_user: root
+  cron: user={{ user_name }} name="Supervisor for {{ app_name }}" special_time="reboot"
+        job="$HOME/bin/runinenv.sh $HOME/.virtualenvs/{{ app_name }} supervisord -c $HOME/etc/supervisord_{{ app_name }}.conf 2>&1"

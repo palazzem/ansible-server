@@ -1,0 +1,23 @@
+[unix_http_server]
+file=/home/{{ user_name }}/var/run/supervisor_{{ app_name }}.sock
+
+[supervisord]
+logfile=/home/{{ user_name }}/var/log/supervisord_{{ app_name }}.log
+logfile_maxbytes=50MB                                                   ; (max main logfile bytes b4 rotation;default 50MB)
+logfile_backups=10                                                      ; (num of main logfile rotation backups;default 10)
+loglevel=warn                                                           ; (log level;default info; others: debug,warn,trace)
+pidfile=/home/{{ user_name }}/var/run/supervisord_{{ app_name }}.pid    ; (supervisord pidfile;default supervisord.pid)
+nodaemon=false                                                          ; (start in foreground if true;default false)
+minfds=1024                                                             ; (min. avail startup file descriptors;default 1024)
+minprocs=200                                                            ; (min. avail process descriptors;default 200)
+
+[rpcinterface:supervisor]
+supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
+
+[supervisorctl]
+serverurl=unix:///home/{{ user_name }}/var/run/supervisor_{{ app_name }}.sock
+
+[program:gunicorn]
+command=runinenv.sh %(ENV_HOME)s/.virtualenvs/{{ app_name }} gunicorn -c gunicorn_config.py --error-logfile /home/{{ user_name }}/var/log/gunicorn_{{ app_name }}.log {{ app_name }}.wsgi
+directory=%(ENV_HOME)s/{{ app_name }}
+startsecs=5
