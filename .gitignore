@@ -1,2 +1,6 @@
+# Generic
 *.cache
 .DS_Store
+
+# IDE
+.idea/
