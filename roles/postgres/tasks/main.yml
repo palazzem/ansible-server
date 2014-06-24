@@ -28,7 +28,7 @@
   copy: src=pg_hba.conf dest=/var/lib/pgsql/data/pg_hba.conf owner=postgres group=postgres mode=0600 backup=yes
   notify: restart postgres
 
-- name: Insert iptables rule for nginx
-  lineinfile: dest=/etc/sysconfig/iptables create=yes state=present regexp="{{ httpd_port }}" insertafter="^:OUTPUT "
+- name: Insert iptables rule for postgres
+  lineinfile: dest=/etc/sysconfig/iptables create=yes state=present regexp="5432" insertafter="^:OUTPUT "
               line="-A INPUT -p tcp  --dport 5432 -j ACCEPT"
   notify: restart iptables
