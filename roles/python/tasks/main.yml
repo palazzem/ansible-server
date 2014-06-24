@@ -20,11 +20,9 @@
   copy: src=virtualenvwrapper.sh dest=/etc/profile.d/virtualenvwrapper.sh
 
 - name: Install PythonZ
-  action: curl -kL https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
-  user: {{ user_name }}
-  sudo: False
+  action: shell curl -kL https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
+  sudo_user: "{{ user_name }}"
 
 - name: Install CPython
-  action: pythonz install {{ python_version }}
-  user: {{ user_name }}
-  sudo: False
+  action: command pythonz install "{{ python_version }}"
+  sudo_user: "{{ user_name }}"

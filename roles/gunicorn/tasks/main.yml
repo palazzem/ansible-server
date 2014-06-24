@@ -1,9 +1,7 @@
 ---
 
 - name: Create virtualenv
-  action: mkvirtualenv {{ app_name }}
-  user: {{ user_name }}
-  sudo: False
+  shell: mkvirtualenv {{ app_name }} | bash
 
 - name: Install gunicorn
   pip: name=gunicorn virtualenv=~/.virtualenvs/{{ app_name }}
