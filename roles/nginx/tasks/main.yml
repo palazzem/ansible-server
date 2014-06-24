@@ -23,6 +23,8 @@
 - name: Make user's home dir xecutable  
   file: path=/home/{{ user_name }} mode=0755 state=directory
 
-- name: Copy 500 and 404 default templates
-  copy: src=common/files/400.html dest=/home/{{ user_name }}/public owner={{ user_name }} group={{ user_name }}
-  copy: src=common/files/500.html dest=/home/{{ user_name }}/public owner={{ user_name }} group={{ user_name }}
+- name: Copy 500 default templates
+  copy: src=500.html dest=/home/{{ user_name }}/public owner={{ user_name }} group={{ user_name }}
+
+- name: Copy 404 default templates
+  copy: src=404.html dest=/home/{{ user_name }}/public owner={{ user_name }} group={{ user_name }}

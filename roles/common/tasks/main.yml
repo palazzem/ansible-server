@@ -5,7 +5,7 @@
   yum: name=libselinux-python state=latest
 
 - name: Create the EPEL Repository.
-  copy: src=epel.repo.j2 dest=/etc/yum.repos.d/epel.repo
+  copy: src=epel.repo dest=/etc/yum.repos.d/epel.repo
 
 - name: Create the GPG key for EPEL
   copy: src=RPM-GPG-KEY-EPEL-6 dest=/etc/pki/rpm-gpg
