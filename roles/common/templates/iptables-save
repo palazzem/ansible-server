@@ -8,6 +8,6 @@
 -A INPUT -p tcp -m tcp ! --tcp-flags FIN,SYN,RST,ACK SYN -m state --state NEW -j DROP 
 -A INPUT -p tcp -m tcp --tcp-flags FIN,SYN,RST,PSH,ACK,URG FIN,SYN,RST,PSH,ACK,URG -j DROP 
 -A INPUT -i lo -j ACCEPT 
--A INPUT -p tcp -m tcp --dport 22230 -j ACCEPT 
+-A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
 COMMIT
 # Completed on Thu Jan 23 05:25:58 2014
