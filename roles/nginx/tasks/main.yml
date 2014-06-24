@@ -28,3 +28,7 @@
 
 - name: Copy 404 default templates
   copy: src=404.html dest=/home/{{ user_name }}/public owner={{ user_name }} group={{ user_name }}
+
+- name: Create a proxy host
+  template: src=proxy.conf.j2 dest=/etc/nginx/conf.d/{{ app_name }}.conf owner=root group=root mode=0644
+  notify: restart nginx
