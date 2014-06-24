@@ -20,7 +20,11 @@
 - name: Configuring postgres user
   ignore_errors: yes
   postgresql_user: user=postgres password={{ psql_pass }} state=present
+  sudo: True
   sudo_user: postgres
+
+- name: Restarting postgresql service
+  action: service name=postgresql state=restarted
 
 - name: Copying default configuration files
   copy: src=pg_hba.conf dest=/var/lib/pgsql/data/pg_hba.conf owner=postgres group=postgres mode=0600 backup=yes
