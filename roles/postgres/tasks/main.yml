@@ -3,9 +3,10 @@
 
 - name: Installing postgresql server
   yum: pkg={{item}} state=present
-    with_items:
-      - postgresql-server
-      - postgresql-devel
+  with_items:
+    - postgresql-server
+    - postgresql-devel
+    - python-psycopg2
 
 - name: Database initialization
   command: service postgresql initdb creates=/var/lib/pgsql/data/pg_hba.conf

@@ -2,9 +2,9 @@
 
 - name: Install nginx and pals
   yum: name={{ item }} state=present
-    with_items:
-     - nginx
-     - git
+  with_items:
+   - nginx
+   - git
 
 - name: Insert iptables rule for nginx
   lineinfile: dest=/etc/sysconfig/iptables create=yes state=present regexp="{{ httpd_port }}" insertafter="^:OUTPUT "

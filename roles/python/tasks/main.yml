@@ -3,17 +3,18 @@
 
 # we need these to support PythonZ installations
 - name: Install Python dependency libraries
-  yum: pkg={{item}} state=present
-    with_items:
-      - zlib-devel
-      - bzip2-devel
-      - openssl-devel
-      - ncurses-devel
-      - sqlite-devel
-      - readline-devel
-      - tk-devel
-      - libjpeg-devel
-      - python-virtualenvwrapper
+  yum: pkg="{{item}}" state=present
+  with_items:
+    - curl
+    - zlib-devel
+    - bzip2-devel
+    - openssl-devel
+    - ncurses-devel
+    - sqlite-devel
+    - readline-devel
+    - tk-devel
+    - libjpeg-devel
+    - python-virtualenvwrapper
 
 - name: Setup virtualenv and the wrapper
   copy: src=virtualenvwrapper.sh dest=/etc/profile.d/virtualenvwrapper.sh
