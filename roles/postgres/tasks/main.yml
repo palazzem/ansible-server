@@ -1,21 +1,35 @@
 ---
 # Configuration of postgresql server
 
+- name: Disabling old Postgresql repository
+  lineinfile: dest=/etc/yum.repos.d/CentOS-Base.repo state=present
+              insertafter="{{ item.insertafter }}"
+              line="{{ item.line }}"
+  with_items:
+    - { insertafter: '^\[base\]$', line: 'exclude=postgresql* # Disable postgres for base' }
+    - { insertafter: '^\[updates\]$', line: 'exclude=postgresql* # Disable postgres for updates' }
+
+- name: Enabling Postgresql 9.3 repository [Download]
+  get_url: url=http://yum.postgresql.org/9.3/redhat/rhel-6-x86_64/pgdg-centos93-9.3-1.noarch.rpm dest=/tmp/pgdg-centos93-9.3-1.noarch.rpm
+
+- name: Enabling Postgresql 9.3 repository [Install]
+  yum: name=/tmp/pgdg-centos93-9.3-1.noarch.rpm state=present
+
 - name: Installing postgresql server
   yum: pkg={{item}} state=present
   with_items:
-    - postgresql-server
-    - postgresql-devel
+    - postgresql93-server
+    - postgresql93-devel
     - python-psycopg2
 
 - name: Database initialization
-  command: service postgresql initdb creates=/var/lib/pgsql/data/pg_hba.conf
+  command: service postgresql-9.3 initdb creates=/var/lib/pgsql/9.3/data/pg_hba.conf
 
 - name: Starting postgresql service
-  action: service name=postgresql state=started
+  action: service name=postgresql-9.3 state=started
 
 - name: Starting postgresql on boot
-  service: name=postgresql enabled=yes
+  service: name=postgresql-9.3 enabled=yes
 
 - name: Configuring postgres user
   ignore_errors: yes
@@ -25,7 +39,7 @@
   notify: restart postgres
 
 - name: Copying default configuration files
-  copy: src=pg_hba.conf dest=/var/lib/pgsql/data/pg_hba.conf owner=postgres group=postgres mode=0600 backup=yes
+  copy: src=pg_hba.conf dest=/var/lib/pgsql/9.3/data/pg_hba.conf owner=postgres group=postgres mode=0600 backup=yes
   notify: restart postgres
 
 - name: Insert iptables rule for postgres
