@@ -15,7 +15,7 @@ server {
     keepalive_timeout 5;
 
     # path for static files
-    root /home/{{ app_name }}/public;
+    root /home/{{ user_name }}/public;
 
     location / {
         # checks for static file, if not found proxy to app
