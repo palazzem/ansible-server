@@ -1,6 +1,6 @@
 ---
 
-- name: restart Postgresql
+- name: restart postgres
   service: name=postgresql-9.3 state=restarted
 
 - name: restart iptables
