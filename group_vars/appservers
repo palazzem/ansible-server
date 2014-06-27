@@ -1,5 +1,3 @@
 ---
 
 httpd_port: 80
-user_name: devel
-user_pass: 123456
