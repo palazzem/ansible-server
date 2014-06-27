@@ -1,54 +1,69 @@
-Janine orchestration
+Server orchestration
 ====================
-This is an Ansible playbook that can be used to deploy Janine search engine in a set of nodes.
+
+Ansible playbook to configure a generic CentOS node for Django applicationshosting. A python script is available.
+
+Installed components
+--------------------
+
+* python interpreters
+* supervisor
+* postgresql
+* nginx (serves static files)
+* gunicorn
+* redis
+
+It takes care of some generic sysadmin tasks like firewall configuration and SELinux.
 
 Requirements
-============
-To use this playbook an Ansible version `>= 1.1` is required. This orchestration software must be installed in a configuration machine and not in Janine nodes.
-It's better to use Ansible following [Running From Checkout][1] method.
+------------
 
-Configuration
-=============
-Before start the orchestration some configuration must be done. An Ansible inventory must be created inside project root folder with `production` filename. This file should list all nodes hostname that must be configured inside `[servers]` group:
-
-	# Production server list
-	[servers]
-	janine.example.com
-	janine2.example.com
-	...
-
-There are global and a host specific configurations that must be changed otherwise Ansible orchestration will not works. All global variables are configured in `group_vars/servers` file and their meanings are:
-
-	---
-	# Janine configuration
-	version: 						--> Janine version to be installed
-
-	# Download URL configuration
-	solr: 							--> URL to wget Solr package
-	mediawiki: 						--> URL to wget Mediawiki package
-	solrlib: 						--> URL to wget updated Solr libs
-
-	# Mediawiki configuration
-	max_upload:						--> Maximum file upload size granted
-
-	# System configuration
-	selinux:						--> SELinux state
-
-All specific host variables are configured inside `host_vars` and a configuration file must be created for each node with a name equal to node hostname (ex: `host_vars/janine.example.com`). Every host configuration file must include:
-
-	---
-	# Mediawiki database passwords
-	wikiuser: 						--> Mediawiki username on PostgreSQL
-	wikipassword:					--> Wikiuser password on PostgreSQL
-	wikidb:							--> Mediawiki database name
-
-	# Postgresql password
-	psqlpassword:					--> PostgreSQL administrator password
+* Ansible 1.6+
+* Click 2.2+
 
 Installation
-============
-Simply run on root folder of your configuration machine:
+------------
 
-	$ ansible-playbook -i production janine.yml
+Create a virtual env and install requirements:
 
-[1]: http://ansible.cc/docs/gettingstarted.html
+    $ pip install -r requirements.txt
+
+Command line interface
+----------------------
+
+`server-manager.py` exposes a really simple command line with `deploy` command:
+
+    Usage: server-manager.py deploy [OPTIONS]
+    Make a full server configuration via Ansible playbook
+
+    Options:
+      --version
+      --name TEXT
+      --app-server TEXT
+      --password TEXT
+      --psql-password TEXT
+      --python [2.7.7|3.4.1]
+      --help                  Show this message and exit.
+
+If any of these options are missing, this script will ask you to complete all needed parameters:
+
+    Your application name: evonove
+    FQDN for app server deployment: evonove.it
+    Set a password for a new user:
+    Repeat for confirmation:
+    Set postgres user password (postgresql admin):
+    Repeat for confirmation:
+    Choose a Python version: 3.4.1
+
+    ---
+
+    'evonove' will be deployed at 'evonove.it'
+    'PostgreSQL' will be deployed at 'evonove.it'
+    Chosen python version: 3.4.1
+
+Send monkeys over the Internet
+------------------------------
+
+Just:
+
+    $ python server-manager.py deploy
