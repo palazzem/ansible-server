@@ -14,7 +14,10 @@
     - readline-devel
     - tk-devel
     - libjpeg-devel
-    - python-virtualenvwrapper
+    - python-pip
+
+- name: Install virtualenv and the wrapper
+  pip: name=virtualenvwrapper
 
 - name: Setup virtualenv and the wrapper
   copy: src=virtualenvwrapper.sh dest=/etc/profile.d/virtualenvwrapper.sh
