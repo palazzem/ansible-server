@@ -1,4 +1,6 @@
 ---
+# This playbook install nginx to serve static files and proxy all requests
+# to a local WSGI application
 
 - name: Enable nginx repository
   copy: src=nginx.repo dest=/etc/yum.repos.d/nginx.repo

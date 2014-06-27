@@ -17,10 +17,10 @@
   yum: name=* state=latest
 
 # TODO: be sure SELinux is running and configure it properly
-
 - name: disable SELinux
   selinux: state=disabled
 
+# TODO: avoid reboot if kernel isn't changed
 - name: Reboot the server
   command: /sbin/reboot
 

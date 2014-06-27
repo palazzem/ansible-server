@@ -1,4 +1,6 @@
 ---
+# This task install supervisord inside application virtualenv so each user has its own
+# supervisor controller
 
 - name: Create virtualenv
   shell: mkvirtualenv {{ app_name }} | bash

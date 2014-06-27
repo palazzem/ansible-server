@@ -1,4 +1,5 @@
 ---
+# This playbook install gunicorn inside a virtualenv for every application
 
 - name: Create virtualenv
   shell: mkvirtualenv -p $(pythonz locate {{ python_version }}) {{ app_name }} | bash

@@ -19,6 +19,9 @@
 - name: Setup virtualenv and the wrapper
   copy: src=virtualenvwrapper.sh dest=/etc/profile.d/virtualenvwrapper.sh
 
+# Python is installed globally so if this machine has 7 running apps, they can
+# share the same python interpreter
+
 - name: Install PythonZ
   action: shell curl -kL https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
 
