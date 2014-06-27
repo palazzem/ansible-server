@@ -1,12 +1,12 @@
 ---
-# This task install supervisord inside application virtualenv so each user has its own
-# supervisor controller
+# This task install supervisord inside its own virtualenv
+# until python 3 compatibility is solved
 
 - name: Create virtualenv
-  shell: mkvirtualenv {{ app_name }} | bash
+  shell: mkvirtualenv {{ supervisord_virtualenv }} | bash
 
 - name: Install supervisor
-  pip: name=supervisor virtualenv=~/.virtualenvs/{{ app_name }}
+  pip: name=supervisor virtualenv=~/.virtualenvs/{{ supervisord_virtualenv }}
 
 - name: Create some useful directory to store bins, configurations and logs
   file: path=/home/{{ user_name }}{{item}} owner={{ user_name }} group={{ user_name }} mode=0700 state=directory
@@ -26,4 +26,4 @@
   sudo: True
   sudo_user: root
   cron: user={{ user_name }} name="Supervisor for {{ app_name }}" special_time="reboot"
-        job="$HOME/bin/runinenv.sh $HOME/.virtualenvs/{{ app_name }} supervisord -c $HOME/etc/supervisord_{{ app_name }}.conf 2>&1"
+        job="$HOME/bin/runinenv.sh $HOME/.virtualenvs/{{ supervisord_virtualenv }} supervisord -c $HOME/etc/supervisord_{{ app_name }}.conf 2>&1"
