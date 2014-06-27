@@ -29,6 +29,12 @@
   roles:
     - gunicorn
 
+- name: install redis
+  hosts: appservers
+
+  roles:
+    - redis
+
 - name: configure and deploy dbservers
   hosts: dbservers
 
