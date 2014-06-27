@@ -1,0 +1,24 @@
+--
+# Task to install Redis directly from source code
+# At the moment it's the only way to obtain latest version for a CentOS os
+
+- name: Download Redis source code
+  get_url: url={{redis_url}} dest=/tmp/redis-{{redis_version}}.tar.gz
+
+- name: Unpacking Redis source code
+  unarchive: copy=no src=/tmp/redis-{{redis_version}}.tar.gz dest=/tmp/redis-{{redis_version}}
+
+- name: Install Redis
+  command: creates=/usr/local/bin/redis-server chdir=/tmp/redis-{{redis_version}} make install
+
+- name: Create redis config directory
+  file: path=/etc/redis state=directory
+
+- name: Copy Redis default configuration
+  copy: src=redis.conf dest=/etc/redis/redis.conf
+
+- name: Copy Redis init.d service
+  copy: src=redis-server dest=/etc/init.d/redis-server
+
+- name: Start Redis at boot time
+  service: name=redis-server state=started enabled=yes
