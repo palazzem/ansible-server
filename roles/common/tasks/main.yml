@@ -1,8 +1,11 @@
 ---
 # This playbook contains common plays that will be run on all nodes.
 
-- name: Installing dependencies
-  yum: name=libselinux-python state=latest
+- name: Installing dependencies and support tools
+  yum: name={{item}} state=latest
+  with_items:
+    - libselinux-python
+    - vim
 
 - name: Create the EPEL Repository.
   copy: src=epel.repo dest=/etc/yum.repos.d/epel.repo
