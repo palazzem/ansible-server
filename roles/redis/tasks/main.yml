@@ -1,4 +1,4 @@
---
+---
 # Task to install Redis directly from source code
 # At the moment it's the only way to obtain latest version for a CentOS os
 
@@ -6,7 +6,7 @@
   get_url: url={{redis_url}} dest=/tmp/redis-{{redis_version}}.tar.gz
 
 - name: Unpacking Redis source code
-  unarchive: copy=no src=/tmp/redis-{{redis_version}}.tar.gz dest=/tmp/redis-{{redis_version}}
+  unarchive: copy=no src=/tmp/redis-{{redis_version}}.tar.gz dest=/tmp/
 
 - name: Install Redis
   command: creates=/usr/local/bin/redis-server chdir=/tmp/redis-{{redis_version}} make install
