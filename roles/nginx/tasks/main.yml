@@ -14,7 +14,7 @@
   notify: restart iptables
 
 - name: Start nginx at boot time
-  service: name=nginx state=started enabled=yes
+  service: name=nginx enabled=yes
 
 - name: Create application user and ssh keys
   user: name={{ user_name }} password={{ user_pass }} generate_ssh_key=yes
@@ -34,7 +34,7 @@
 - name: Increase server names hash size
   lineinfile: dest=/etc/nginx/nginx.conf create=yes state=present insertafter="http \{"
               line="    server_names_hash_bucket_size {{ server_names_hash_bucket_size }};"
-  notify: restart iptables
+  notify: restart nginx
 
 - name: Create a proxy host
   template: src=proxy.conf.j2 dest=/etc/nginx/conf.d/{{ app_name }}.conf owner=root group=root mode=0644
