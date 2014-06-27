@@ -6,4 +6,4 @@
 
 # TODO: version is freezed because of a FATAL bug in 19.0. Waiting for 19.1 official release
 - name: Install gunicorn
-  pip: name={{ gunicorn_freezed_version }} virtualenv=~/.virtualenvs/{{ app_name }}
+  pip: name="{{ gunicorn_freezed_version }}" virtualenv=~/.virtualenvs/{{ app_name }}
