@@ -18,7 +18,10 @@
   copy: src=redis.conf dest=/etc/redis/redis.conf
 
 - name: Copy Redis init.d service
-  copy: src=redis-server dest=/etc/init.d/redis-server
+  copy: src=redis-server dest=/etc/init.d/redis-server mode=0755
+
+- name: Add Redis service
+  command: chkconfig --add redis-server
 
 - name: Start Redis at boot time
   service: name=redis-server state=started enabled=yes
