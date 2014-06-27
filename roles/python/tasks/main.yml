@@ -21,8 +21,6 @@
 
 - name: Install PythonZ
   action: shell curl -kL https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
-  sudo_user: "{{ user_name }}"
 
 - name: Install CPython
   action: command pythonz install "{{ python_version }}"
-  sudo_user: "{{ user_name }}"
