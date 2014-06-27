@@ -27,3 +27,6 @@
   sudo_user: root
   cron: user={{ user_name }} name="Supervisor for {{ app_name }}" special_time="reboot"
         job="$HOME/bin/runinenv.sh $HOME/.virtualenvs/{{ supervisord_virtualenv }} supervisord -c $HOME/etc/supervisord_{{ app_name }}.conf 2>&1"
+
+- name: Start supervisord
+  shell: "$HOME/bin/runinenv.sh $HOME/.virtualenvs/{{ supervisord_virtualenv }} supervisord -c $HOME/etc/supervisord_{{ app_name }}.conf 2>&1"
