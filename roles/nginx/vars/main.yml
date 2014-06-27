@@ -2,3 +2,4 @@
 
 app_name: myapp
 server_name: ansible-vm
+server_names_hash_bucket_size: 64
