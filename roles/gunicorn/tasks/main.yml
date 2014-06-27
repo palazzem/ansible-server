@@ -4,5 +4,6 @@
 - name: Create virtualenv
   shell: mkvirtualenv -p $(pythonz locate {{ python_version }}) {{ app_name }} | bash
 
+# TODO: version is freezed because of a FATAL bug in 19.0. Waiting for 19.1 official release
 - name: Install gunicorn
-  pip: name=gunicorn virtualenv=~/.virtualenvs/{{ app_name }}
+  pip: name={{ gunicorn_freezed_version }} virtualenv=~/.virtualenvs/{{ app_name }}

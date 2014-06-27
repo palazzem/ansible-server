@@ -1,0 +1,3 @@
+--
+
+gunicorn_freezed_version: git+git://github.com/benoitc/gunicorn.git@26df0651bcf1655ef63ac3b968344d737d3a7bfc
