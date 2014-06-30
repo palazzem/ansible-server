@@ -61,9 +61,23 @@ If any of these options are missing, this script will ask you to complete all ne
     'PostgreSQL' will be deployed at 'evonove.it'
     Chosen python version: 3.4.1
 
+**Note:** If you want to skip any wsgi configuration, `Your application name` should be your repository name.
+
 Send monkeys over the Internet
 ------------------------------
 
 Just:
 
     $ python server-manager.py deploy
+
+The day after deploy
+--------------------
+
+To finalize your deploy simply:
+
+* clone your repository in user folder (it's your `application name`)
+* `workon` virtualenv and install your app requirements
+* `workon supervisord` and use `supervisorctl -c ~/etc/supervisord_<application_name>.conf`
+* `restart all`
+* set environ vars inside `postactivate` if required
+* do further configurations if required (ex: add celery to supervisor)
