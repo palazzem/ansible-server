@@ -1,7 +1,6 @@
 import click
 
-from appserver.commands.generics import version
-from appserver.commands.services import deploy
+from appserver.commands.generics import version, prepare
 
 
 @click.group()
@@ -11,7 +10,8 @@ def cli():
     Deploy fast your Django app!
     """
 
-cli.add_command(deploy)
+# Available subcommands
+cli.add_command(prepare)
 
 
 if __name__ == '__main__':
