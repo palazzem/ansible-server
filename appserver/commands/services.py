@@ -3,8 +3,28 @@ import json
 
 from subprocess import call
 
-from ..conf import AVAILABLE_PYTHONZ
+from ..conf import AVAILABLE_PYTHONZ, ANSIBLE_BOOK, ANSIBLE_TASK
 from ..utils import parser, write_hosts_inventory
+
+
+@click.group(short_help="add a specific service to your node")
+def add():
+    pass
+
+
+@add.command("nginx", short_help="add a web server with proxy capabilities")
+@click.argument('ip')
+def nginx(ip):
+    """
+    Add nginx proxy to chosen node
+    """
+
+    print("\n---\n")
+    print("nginx service is going to be installed for {}".format(ip))
+
+    if click.confirm("Do you want to continue?"):
+        inventory = write_hosts_inventory(ip)
+        call(["ansible-playbook", ANSIBLE_BOOK, "-i", inventory, "--tags", ANSIBLE_TASK["nginx"]])
 
 
 def full_configuration(param):
