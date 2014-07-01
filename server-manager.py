@@ -5,7 +5,7 @@ from tempfile import NamedTemporaryFile
 from subprocess import call
 
 
-__VERSION__ = "0.0.0"
+__VERSION__ = "0.1.0"
 AVAILABLE_PYTHONZ = [
     "2.7.7",
     "3.4.1",
