@@ -1,19 +1,7 @@
 Server orchestration
 ====================
 
-Ansible playbook to configure a generic CentOS node for Django applicationshosting. A python script is available.
-
-Installed components
---------------------
-
-* python interpreters
-* supervisor
-* postgresql
-* nginx (serves static files)
-* gunicorn
-* redis
-
-It takes care of some generic sysadmin tasks like firewall configuration and SELinux.
+Ansible playbook to configure a generic CentOS node for Django applications hosting. A python script is also available.
 
 Requirements
 ------------
@@ -21,12 +9,75 @@ Requirements
 * Ansible 1.6+
 * Click 2.2+
 
-Installation
-------------
-
-Create a virtual env and install requirements:
+Create a virtualenv and install above requirements:
 
     $ pip install -r requirements.txt
+
+Available tasks
+---------------
+
+The Ansible playbook exposes the following tasks:
+
+* Prepare a node for basic functions (`basic`)
+* Add nginx service (`nginx`)
+* Add redis service (`redis`)
+* Add postgresql service (`postgresql`)
+* Prepare for application deployment (`application`)
+
+To use a particular task, use `--tags` options like:
+
+    $ ansible orchestration.yml -i hosts --tags basic
+
+*Note:* `hosts` file should exists in your folder. Check how to create an [inventory][1].
+
+[1]: http://docs.ansible.com/intro_inventory.html
+
+Required parameters
+-------------------
+
+These parameters are required in order to let Ansible works like expected:
+
+basic
+~~~~~
+
+None
+
+nginx
+~~~~~
+
+None
+
+redis
+~~~~~
+
+None
+
+postgresql
+~~~~~~~~~~
+
+* psql_pass: password for a global postgres user
+
+application
+~~~~~~~~~~~
+
+* user_name: user that will host the application and all configurations files including static files
+* user_pass: password for above user
+* app_name: the name of your application
+* createdb: should be `True` if it's required to create a user and a database inside postgresql instance
+* python_version: choose a python version for your application
+
+To pass a parameter, simply:
+
+    $ ansible orchestration.yml -i hosts --tags postgresql -e {"psql_pass" : "123456"}
+
+Notes
+-----
+
+`nginx` serves all static files inside your `user_name` home directory. If the file is not available, it does a
+reverse proxy to your wsgi application server (ATM it's `gunicorn`). Otherwise its a 404 error page.
+
+`application` configures all other components to host your new wsgi application. It uses a global installation of
+python if available otherwise a new version of interpreter is installed with `pythonz`.
 
 Command line interface
 ----------------------
