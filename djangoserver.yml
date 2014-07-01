@@ -3,16 +3,12 @@
 
 # Overview: Playbook to bootstrap a new host for serving Django apps
 
-- name: apply common configuration to all nodes
+- name: Prepare a node for basic functions
   hosts: all
+  tags: basic
 
   roles:
     - common
-
-- name: install Python on webservers
-  hosts: appservers
-
-  roles:
     - python
 
 - name: configure http server
