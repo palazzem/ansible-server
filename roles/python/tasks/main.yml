@@ -26,7 +26,7 @@
 # share the same python interpreter
 
 - name: Install PythonZ
-  action: shell curl -kL https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
+  shell: curl -kL https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
 
 - name: Install CPython
-  action: command pythonz install "{{ python_version }}"
+  command: pythonz install "{{ python_version }}"
