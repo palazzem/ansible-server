@@ -36,10 +36,10 @@ def prepare(ip):
 
 @click.command("deploy", short_help="prepare all components for application deployment")
 @click.option('--app-name', prompt="Your application name")
+@click.password_option('--password', prompt="Set a password for a new user")
 @click.option('--server-name', prompt="FQDN for app server deployment")
 @click.option('--python', type=click.Choice(AVAILABLE_PYTHONZ), prompt="Choose a Python version")
 @click.option('--createdb/--no-createdb', default=True, prompt="Do I need to create a user in postgres with a database?")
-@click.password_option('--password', prompt="Set a password for a new user")
 @click.argument('ip')
 def deploy(ip, **kwargs):
     """
