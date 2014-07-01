@@ -28,3 +28,13 @@
 
 - name: Install or use chosen CPython
   command: pythonz install "{{ python_version }}"
+
+# postgresql configurations
+
+- name: Create a new postgres user
+  postgresql_user: name={{ user_name }} password={{ user_pass }}
+  when: createdb == True
+
+- name: Create a new database and grant privileges
+  postgresql_db: name={{ app_name }} owner={{ user_name }}
+  when: createdb == True
