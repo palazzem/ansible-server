@@ -27,6 +27,21 @@ def nginx(ip):
         call(["ansible-playbook", ANSIBLE_BOOK, "-i", inventory, "--tags", ANSIBLE_TASK["nginx"]])
 
 
+@add.command("redis", short_help="add a fast and reliable data structure server")
+@click.argument('ip')
+def redis(ip):
+    """
+    Add redis to chosen node
+    """
+
+    print("\n---\n")
+    print("redis service is going to be installed for {}".format(ip))
+
+    if click.confirm("Do you want to continue?"):
+        inventory = write_hosts_inventory(ip)
+        call(["ansible-playbook", ANSIBLE_BOOK, "-i", inventory, "--tags", ANSIBLE_TASK["redis"]])
+
+
 def full_configuration(param):
     ansible_param = parser(param)
     inventory = write_hosts_inventory(param.get("app_server"))
