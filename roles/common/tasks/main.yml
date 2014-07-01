@@ -13,6 +13,13 @@
 - name: Create the GPG key for EPEL
   copy: src=RPM-GPG-KEY-EPEL-6 dest=/etc/pki/rpm-gpg
 
+- name: Updating to latest kernel
+  yum: name={{item}} state=latest
+  register: kernel
+  with_items:
+    - kernel
+    - kernel-firmware
+
 - name: Update system
   yum: name=* state=latest
 
@@ -20,9 +27,9 @@
 - name: disable SELinux
   selinux: state=disabled
 
-# TODO: avoid reboot if kernel isn't changed
-- name: Reboot the server
+- name: Rebooting server if kernel has changed
   command: /sbin/reboot
+  when: result|changed
 
 - name: waiting for server to come back
   local_action: wait_for host={{ inventory_hostname }} port=22 state=started delay=30
