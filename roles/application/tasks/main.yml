@@ -23,3 +23,8 @@
 - name: Create a proxy host
   template: src=proxy.conf.j2 dest=/etc/nginx/conf.d/{{ app_name }}.conf owner=root group=root mode=0644
   notify: restart nginx
+
+# check or install a new python interpreter
+
+- name: Install or use chosen CPython
+  command: pythonz install "{{ python_version }}"

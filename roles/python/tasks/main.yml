@@ -27,6 +27,3 @@
 
 - name: Install PythonZ
   shell: curl -kL https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
-
-- name: Install CPython
-  command: pythonz install "{{ python_version }}"
