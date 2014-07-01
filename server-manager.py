@@ -49,6 +49,7 @@ def full_configuration(param):
 
 
 @click.group()
+@click.option('--version', is_flag=True, callback=version, expose_value=False, is_eager=True)
 def cli():
     """
     Deploy fast your Django app!
@@ -56,12 +57,11 @@ def cli():
 
 
 @click.command("deploy", short_help="make a full deploy")
-@click.option('--version', is_flag=True, callback=version, expose_value=False, is_eager=True)
 @click.option('--name', prompt="Your application name")
 @click.option('--app-server', prompt="FQDN for app server deployment")
+@click.option('--python', type=click.Choice(AVAILABLE_PYTHONZ), prompt="Choose a Python version")
 @click.password_option('--password', prompt="Set a password for a new user")
 @click.password_option('--psql-password', prompt="Set postgres user password (postgresql admin)")
-@click.option('--python', type=click.Choice(AVAILABLE_PYTHONZ), prompt="Choose a Python version")
 def deploy(*args, **kwargs):
     """
     Make a full server configuration via Ansible playbook
