@@ -32,18 +32,14 @@
   roles:
     - postgres
 
-- name: install gunicorn on a virtualenv
+- name: Add application
   hosts: all
+  tags: application
+
   sudo: True
   sudo_user: "{{ user_name }}"
 
   roles:
-    - gunicorn
-
-- name: configure supervisor
-  hosts: all
-  sudo: True
-  sudo_user: "{{ user_name }}"
-
-  roles:
+    - application
     - supervisor
+    - gunicorn
