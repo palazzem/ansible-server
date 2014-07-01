@@ -42,6 +42,23 @@ def redis(ip):
         call(["ansible-playbook", ANSIBLE_BOOK, "-i", inventory, "--tags", ANSIBLE_TASK["redis"]])
 
 
+@add.command("postgresql", short_help="add a strong, reliable and real DBMS")
+@click.password_option('--psql-password', prompt="Set postgres user password (postgresql admin)")
+@click.argument('ip')
+def postgresql(ip, psql_password):
+    """
+    Add postgresql to chosen node
+    """
+
+    print("\n---\n")
+    print("postgresql service is going to be installed for {}".format(ip))
+
+    if click.confirm("Do you want to continue?"):
+        inventory = write_hosts_inventory(ip)
+        call(["ansible-playbook", ANSIBLE_BOOK, "-i", inventory, "--tags", ANSIBLE_TASK["postgres"],
+              "-e", "psql_pass={}".format(psql_password)])
+
+
 def full_configuration(param):
     ansible_param = parser(param)
     inventory = write_hosts_inventory(param.get("app_server"))
