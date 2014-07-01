@@ -14,7 +14,7 @@ def parser(param):
 
 def write_hosts_inventory(appserver):
     hosts_file = NamedTemporaryFile(delete=False)
-    hosts = "[appservers]\n{0}\n\n[dbservers]\n{1}".format(appserver, appserver)
+    hosts = "[appservers]\n{0}".format(appserver)
 
     hosts_file.write(hosts)
     hosts_file.close()
