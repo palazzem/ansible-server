@@ -1,10 +1,11 @@
 import click
+import json
 
 from subprocess import call
 
 from appserver import VERSION
-from ..conf import ANSIBLE_BOOK, ANSIBLE_TASK
-from ..utils import write_hosts_inventory
+from ..conf import ANSIBLE_BOOK, ANSIBLE_TASK, AVAILABLE_PYTHONZ
+from ..utils import write_hosts_inventory, parser
 
 
 def version(ctx, param, value):
@@ -31,3 +32,27 @@ def prepare(ip):
     if click.confirm("Do you want to continue?"):
         inventory = write_hosts_inventory(ip)
         call(["ansible-playbook", ANSIBLE_BOOK, "-i", inventory, "--tags", ANSIBLE_TASK["basic"]])
+
+
+@click.command("deploy", short_help="prepare all components for application deployment")
+@click.option('--app-name', prompt="Your application name")
+@click.option('--server-name', prompt="FQDN for app server deployment")
+@click.option('--python', type=click.Choice(AVAILABLE_PYTHONZ), prompt="Choose a Python version")
+@click.option('--createdb', is_flag=True, prompt="Do I need to create a user in postgres with a database?")
+@click.password_option('--password', prompt="Set a password for a new user")
+@click.argument('ip')
+def deploy(ip, **kwargs):
+    """
+    Prepare all components for application deployment
+    """
+
+    print("\n---\n")
+    print("'{}' will be configured to host {} as {}".format(ip, kwargs.get("app_name"), kwargs.get("server_name")))
+    print("Running python version: {}".format(kwargs.get('python')))
+    print("Database creation: {}".format(kwargs.get('createdb')))
+
+    if click.confirm("Do you want to continue?"):
+        ansible_param = parser(kwargs)
+        inventory = write_hosts_inventory(ip)
+        call(["ansible-playbook", ANSIBLE_BOOK, "-i", inventory, "--tags", ANSIBLE_TASK["application"],
+              "-e", json.dumps(ansible_param)])

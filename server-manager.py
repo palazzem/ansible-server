@@ -1,6 +1,6 @@
 import click
 
-from appserver.commands.generics import version, prepare
+from appserver.commands.generics import version, prepare, deploy
 from appserver.commands.services import add
 
 
@@ -12,8 +12,9 @@ def cli():
     """
 
 # Available subcommands
-cli.add_command(prepare)
 cli.add_command(add)
+cli.add_command(deploy)
+cli.add_command(prepare)
 
 
 if __name__ == '__main__':

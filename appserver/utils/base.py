@@ -3,12 +3,12 @@ from tempfile import NamedTemporaryFile
 
 def parser(param):
     return {
-        "app_name": param.get("name"),
-        "server_name": param.get("app_server"),
-        "user_name": param.get("name"),
+        "app_name": param.get("app_name"),
+        "server_name": param.get("server_name"),
+        "user_name": param.get("app_name"),
         "user_pass": param.get("password"),
-        "psql_pass": param.get("psql_password"),
         "python_version": param.get("python"),
+        "createdb": param.get("createdb"),
     }
 
 
