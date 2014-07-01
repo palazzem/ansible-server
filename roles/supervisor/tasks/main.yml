@@ -1,9 +1,6 @@
 ---
 # Install supervisord inside a virtualenv until python 3 compatibility issue is solved
 
-- name: Create virtualenv
-  shell: mkvirtualenv {{ supervisord_virtualenv }} | bash
-
 - name: Install supervisor
   pip: name=supervisor virtualenv=~/.virtualenvs/{{ supervisord_virtualenv }}
 

@@ -3,9 +3,6 @@
 
 # Generic configurations
 
-- name: Create application user and ssh keys
-  user: name={{ user_name }} password={{ user_pass }} generate_ssh_key=yes
-
 - name: Create public directory to serve static files
   file: path=/home/{{ user_name }}/public owner={{ user_name }} group={{ user_name }} mode=0755 state=directory
 
@@ -19,25 +16,20 @@
     - 404.html
 
 - name: Create virtualenv
-  shell: mkvirtualenv -p $(pythonz locate {{ python_version }}) {{ app_name }} | bash
-
-# nginx configurations
-
-- name: Create a reverse proxy for WSGI application
-  template: src=proxy.conf.j2 dest=/etc/nginx/conf.d/{{ app_name }}.conf owner=root group=root mode=0644
-  notify: restart nginx
-
-# check or install a new python interpreter
-
-- name: Install or use chosen CPython
-  command: pythonz install "{{ python_version }}"
+  shell:
+    executable=/bin/bash
+    source `which virtualenvwrapper.sh` && mkvirtualenv -p {{ python_path.stdout }} {{ app_name }}
 
 # postgresql configurations
 
 - name: Create a new postgres user
   postgresql_user: name={{ user_name }} password={{ user_pass }}
+  sudo: True
+  sudo_user: postgres
   when: createdb == True
 
 - name: Create a new database and grant privileges
   postgresql_db: name={{ app_name }} owner={{ user_name }}
+  sudo: True
+  sudo_user: postgres
   when: createdb == True

@@ -1,0 +1,28 @@
+---
+# Define there all actions to do before application task
+
+# Common tasks
+
+- name: Create application user and ssh keys
+  user: name={{ user_name }} password={{ user_pass }} generate_ssh_key=yes
+
+
+# nginx configurations
+
+- name: Create a reverse proxy for WSGI application
+  template: src=proxy.conf.j2 dest=/etc/nginx/conf.d/{{ app_name }}.conf owner=root group=root mode=0644
+  notify: restart nginx
+
+# Python is installed globally so if this machine has 7 running apps, they can
+# share the same python interpreter
+
+- name: Install CPython
+  shell:
+    executable=/bin/bash
+    /usr/local/pythonz/bin/pythonz install "{{ python_version }}"
+
+- name: Use selected CPython
+  shell:
+    executable=/bin/bash
+    /usr/local/pythonz/bin/pythonz locate "{{ python_version }}"
+  register: python_path

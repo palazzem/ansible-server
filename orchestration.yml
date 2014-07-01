@@ -35,6 +35,13 @@
   hosts: all
   tags: application
 
+  roles:
+    - preapplication
+
+- name: WSGI server and supervisor
+  hosts: all
+  tags: application
+
   sudo: True
   sudo_user: "{{ user_name }}"
 
