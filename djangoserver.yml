@@ -11,11 +11,26 @@
     - common
     - python
 
-- name: configure http server
+- name: Add service nginx
   hosts: appservers
+  tags: nginx
 
   roles:
     - nginx
+
+- name: Add service redis
+  hosts: appservers
+  tags: redis
+
+  roles:
+    - redis
+
+- name: Add service postgresql
+  hosts: dbservers
+  tags: postgres
+
+  roles:
+    - postgres
 
 - name: install gunicorn on a virtualenv
   hosts: appservers
@@ -24,18 +39,6 @@
 
   roles:
     - gunicorn
-
-- name: install redis
-  hosts: appservers
-
-  roles:
-    - redis
-
-- name: configure and deploy dbservers
-  hosts: dbservers
-
-  roles:
-    - postgres
 
 - name: configure supervisor
   hosts: appservers
