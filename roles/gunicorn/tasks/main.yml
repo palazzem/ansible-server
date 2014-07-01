@@ -1,8 +1,5 @@
 ---
-# This playbook install gunicorn inside a virtualenv for every application
-
-- name: Create virtualenv
-  shell: mkvirtualenv -p $(pythonz locate {{ python_version }}) {{ app_name }} | bash
+# Install gunicorn inside a virtualenv for every application
 
 # TODO: version is freezed because of a FATAL bug in 19.0. Waiting for 19.1 official release
 - name: Install gunicorn

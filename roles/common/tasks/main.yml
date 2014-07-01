@@ -1,5 +1,5 @@
 ---
-# This playbook contains common plays that will be run on all nodes.
+# Contains common plays that must be run at least once
 
 - name: Installing dependencies and support tools
   yum: name={{item}} state=latest
@@ -7,7 +7,7 @@
     - libselinux-python
     - vim
 
-- name: Create the EPEL Repository.
+- name: Import EPEL Repository
   copy: src=epel.repo dest=/etc/yum.repos.d/epel.repo
 
 - name: Create the GPG key for EPEL
@@ -27,11 +27,11 @@
 - name: disable SELinux
   selinux: state=disabled
 
-- name: Rebooting server if kernel has changed
+- name: Rebooting server
   command: /sbin/reboot
   when: kernel|changed
 
-- name: waiting for server to come back
+- name: Waiting for server to come back
   local_action: wait_for host={{ inventory_hostname }} port=22 state=started delay=30
 
 - name: Install development tools

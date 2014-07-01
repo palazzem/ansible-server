@@ -1,6 +1,5 @@
 ---
-# This task install supervisord inside its own virtualenv
-# until python 3 compatibility is solved
+# Install supervisord inside a virtualenv until python 3 compatibility issue is solved
 
 - name: Create virtualenv
   shell: mkvirtualenv {{ supervisord_virtualenv }} | bash
@@ -8,7 +7,7 @@
 - name: Install supervisor
   pip: name=supervisor virtualenv=~/.virtualenvs/{{ supervisord_virtualenv }}
 
-- name: Create some useful directory to store bins, configurations and logs
+- name: Create some useful directories to store bins, configurations and logs
   file: path=/home/{{ user_name }}{{item}} owner={{ user_name }} group={{ user_name }} mode=0700 state=directory
   with_items:
    - /bin
@@ -28,5 +27,5 @@
   cron: user={{ user_name }} name="Supervisor for {{ app_name }}" special_time="reboot"
         job="$HOME/bin/runinenv.sh $HOME/.virtualenvs/{{ supervisord_virtualenv }} supervisord -c $HOME/etc/supervisord_{{ app_name }}.conf 2>&1"
 
-- name: Start supervisord
+- name: Start supervisor daemon
   shell: "$HOME/bin/runinenv.sh $HOME/.virtualenvs/{{ supervisord_virtualenv }} supervisord -c $HOME/etc/supervisord_{{ app_name }}.conf 2>&1"

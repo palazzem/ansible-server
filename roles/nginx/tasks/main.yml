@@ -1,11 +1,11 @@
 ---
-# This playbook install nginx to serve static files and proxy all requests
-# to a local WSGI application
+# Install nginx to serve static files and
+# proxy all requests to a local WSGI application server
 
 - name: Enable nginx repository
   copy: src=nginx.repo dest=/etc/yum.repos.d/nginx.repo
 
-- name: Install nginx and pals
+- name: Install nginx
   yum: name={{ item }} state=present
   with_items:
    - nginx

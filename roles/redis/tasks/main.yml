@@ -1,6 +1,6 @@
 ---
-# Task to install Redis directly from source code
-# At the moment it's the only way to obtain latest version for a CentOS os
+# Install Redis directly from source code
+# At the moment it's the only way to obtain the latest version for a CentOS
 
 - name: Download Redis source code
   get_url: url={{redis_url}} dest=/tmp/redis-{{redis_version}}.tar.gz

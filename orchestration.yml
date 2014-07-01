@@ -1,9 +1,8 @@
 ---
-# ^^^ YAML documents must begin with the document separator "---"
 
-# Overview: Playbook to bootstrap a new host for serving Django apps
+# Overview: Bootstrap a new node, ready to server Django applications
 
-- name: Prepare a node for basic functions
+- name: Prepare a node for some basic functions
   hosts: all
   tags: basic
 
@@ -11,28 +10,28 @@
     - common
     - python
 
-- name: Add service nginx
+- name: Add nginx service
   hosts: appservers
   tags: nginx
 
   roles:
     - nginx
 
-- name: Add service redis
+- name: Add redis service
   hosts: all
   tags: redis
 
   roles:
     - redis
 
-- name: Add service postgresql
+- name: Add postgresql service
   hosts: all
   tags: postgres
 
   roles:
     - postgres
 
-- name: Add application
+- name: Prepare for application deployment
   hosts: all
   tags: application
 

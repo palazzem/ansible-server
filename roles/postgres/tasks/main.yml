@@ -1,5 +1,5 @@
 ---
-# Configuration of postgresql server
+# Postgresql server configuration
 
 - name: Disabling old Postgresql repository
   lineinfile: dest=/etc/yum.repos.d/CentOS-Base.repo state=present
