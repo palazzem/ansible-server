@@ -19,21 +19,21 @@
     - nginx
 
 - name: Add service redis
-  hosts: appservers
+  hosts: all
   tags: redis
 
   roles:
     - redis
 
 - name: Add service postgresql
-  hosts: dbservers
+  hosts: all
   tags: postgres
 
   roles:
     - postgres
 
 - name: install gunicorn on a virtualenv
-  hosts: appservers
+  hosts: all
   sudo: True
   sudo_user: "{{ user_name }}"
 
@@ -41,7 +41,7 @@
     - gunicorn
 
 - name: configure supervisor
-  hosts: appservers
+  hosts: all
   sudo: True
   sudo_user: "{{ user_name }}"
 
