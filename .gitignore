@@ -1,6 +1,7 @@
 # Generic
 *.cache
 .DS_Store
+*.pyc
 
 # IDE
 .idea/
