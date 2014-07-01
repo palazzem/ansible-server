@@ -3,7 +3,7 @@ import json
 
 from subprocess import call
 
-from .. import AVAILABLE_PYTHONZ
+from ..conf import AVAILABLE_PYTHONZ
 from ..utils import parser, write_hosts_inventory
 
 
