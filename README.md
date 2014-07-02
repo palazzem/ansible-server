@@ -38,27 +38,27 @@ Required parameters
 These parameters are required in order to let Ansible works like expected:
 
 basic
-~~~~~
+-----
 
 None
 
 nginx
-~~~~~
+-----
 
 None
 
 redis
-~~~~~
+-----
 
 None
 
 postgresql
-~~~~~~~~~~
+----------
 
 * psql_pass: password for a global postgres user
 
 application
-~~~~~~~~~~~
+-----------
 
 * user_name: user that will host the application and all configurations files including static files
 * user_pass: password for above user
@@ -98,7 +98,7 @@ Command line interface
       prepare  fill a node with all required packages
 
 Commands
-~~~~~~~~
+--------
 
 * `prepare`: when you create a new CentOS machine (VM, DigitalOcean, etc.) this should be the first running command.
  It installs all basic requirements like SELinux, firewall configuration, development tools (git, mercurial, etc.) and
@@ -111,14 +111,14 @@ Commands
  override your firewall settings.
 
 Prepare
-~~~~~~~
+-------
 
     Usage: manager.py prepare [OPTIONS] IP
 
 Options: none
 
 Add
-~~~
+---
 
     Usage: manager.py add [OPTIONS] COMMAND IP
 
@@ -135,7 +135,7 @@ Options `postgresql`:
     --psql-password TEXT  choose a postgres user password
 
 Deploy
-~~~~~~
+------
 
     Usage: manager.py deploy [OPTIONS] IP
 
@@ -148,7 +148,7 @@ Options:
     --createdb / --no-createdb  Creates a new role for postgresql database and a new database
 
 Command line notes
-~~~~~~~~~~~~~~~~~~
+------------------
 
 If any of above options are missing, the script prompts you all needed parameters:
 
