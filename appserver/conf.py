@@ -9,6 +9,6 @@ ANSIBLE_TASK = {
 }
 
 AVAILABLE_PYTHONZ = [
-    "2.7.7",
+    "2.7.8",
     "3.4.1",
 ]
