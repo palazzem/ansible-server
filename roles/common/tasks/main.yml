@@ -4,6 +4,7 @@
 - name: Installing dependencies and support tools
   yum: name={{item}} state=latest
   with_items:
+    - iptables-services
     - libselinux-python
     - vim
 
