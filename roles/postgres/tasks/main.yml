@@ -23,10 +23,13 @@
     - python-psycopg2
 
 - name: Database initialization
-  command: service postgresql-9.3 initdb creates=/var/lib/pgsql/9.3/data/pg_hba.conf
+  shell:
+    executable=/bin/bash
+    creates=/var/lib/pgsql/9.3/data/pg_hba.conf
+    /usr/pgsql-9.3/bin/postgresql93-setup initdb
 
 - name: Starting postgresql service
-  action: service name=postgresql-9.3 state=started
+  service: name=postgresql-9.3 state=started
 
 - name: Starting postgresql on boot
   service: name=postgresql-9.3 enabled=yes
