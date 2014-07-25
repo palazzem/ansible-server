@@ -186,3 +186,19 @@ To finalize your deploy simply:
 * restart all supervisor services
 * set environment vars for `postactivate` if required
 * do further configurations if required (ex: add celery to supervisor, etc.)
+
+Changelog
+---------
+
+0.2.0
+~~~~~
+
+* Ansible script now supports ``nginx``, ``postgresql`` and ``redis`` services
+* Better Python API
+* Python script exposes ``prepare``, ``add``, and ``deploy`` commands
+
+0.1.0
+~~~~~
+
+* Ansible script with basic install feature
+* First draft of a Python script built with ``click`` library
