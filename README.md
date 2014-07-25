@@ -190,22 +190,19 @@ To finalize your deploy simply:
 Changelog
 ---------
 
-0.2.1
-~~~~~
+### 0.2.1
 
 * Fixed iptables service package
 * Using postgresql setup instead of service for initdb
 * Full CentOS 7 support
 
-0.2.0
-~~~~~
+### 0.2.0
 
 * Ansible script now supports ``nginx``, ``postgresql`` and ``redis`` services
 * Better Python API
 * Python script exposes ``prepare``, ``add``, and ``deploy`` commands
 
-0.1.0
-~~~~~
+### 0.1.0
 
 * Ansible script with basic install feature
 * First draft of a Python script built with ``click`` library
