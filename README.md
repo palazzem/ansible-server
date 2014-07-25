@@ -190,6 +190,13 @@ To finalize your deploy simply:
 Changelog
 ---------
 
+0.2.1
+~~~~~
+
+* Fixed iptables service package
+* Using postgresql setup instead of service for initdb
+* Full CentOS 7 support
+
 0.2.0
 ~~~~~
 
