@@ -14,7 +14,11 @@
     - readline-devel
     - tk-devel
     - libjpeg-devel
-    - python-pip
+
+- name: Configuring Python pip
+  shell:
+    executable=/bin/bash
+    curl https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py | python2.7 -
 
 - name: Install virtualenv and the wrapper
   pip: name=virtualenvwrapper
