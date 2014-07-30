@@ -29,9 +29,10 @@
   selinux: state=disabled
 
 - name: Rebooting server
-  command: shutdown -r now "Ansible: kernel changed trigger"
+  command: shutdown -r now "Ansible kernel changed trigger"
   async: 0
   poll: 0
+  ignore_errors: true
   when: kernel|changed
 
 - name: Waiting for server to come back
