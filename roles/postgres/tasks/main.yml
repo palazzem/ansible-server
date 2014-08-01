@@ -45,6 +45,9 @@
   copy: src=pg_hba.conf dest=/var/lib/pgsql/9.3/data/pg_hba.conf owner=postgres group=postgres mode=0600 backup=yes
   notify: restart postgres
 
+- name: Add bin folder to env $PATH
+  copy: src=postgresql.sh dest=/etc/profile.d/postgresql.sh
+
 - name: Insert iptables rule for postgres
   lineinfile: dest=/etc/sysconfig/iptables create=yes state=present regexp="5432" insertafter="^:OUTPUT "
               line="-A INPUT -p tcp  --dport 5432 -j ACCEPT"
