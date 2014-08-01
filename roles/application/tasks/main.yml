@@ -22,14 +22,18 @@
 
 # postgresql configurations
 
+- name: Check PostgreSQL service
+  stat: path=/usr/lib/systemd/system/postgresql-9.3.service get_md5=no
+  register: postgres_service
+
 - name: Create a new postgres user
   postgresql_user: name={{ user_name }} password={{ user_pass }}
   sudo: True
   sudo_user: postgres
-  when: createdb == True
+  when: createdb == True and postgres_service.stat.exists
 
 - name: Create a new database and grant privileges
   postgresql_db: name={{ app_name }} owner={{ user_name }}
   sudo: True
   sudo_user: postgres
-  when: createdb == True
+  when: createdb == True and postgres_service.stat.exists
