@@ -12,6 +12,9 @@ server {
     client_max_body_size 1G;
     server_name {{ server_name }};
 
+    access_log  /var/log/nginx/{{ app_name }}.access.log main;
+    error_log   /var/log/nginx/{{ app_name }}.error.log;
+
     keepalive_timeout 5;
 
     # path for static files
