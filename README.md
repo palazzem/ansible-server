@@ -153,11 +153,11 @@ Command line notes
 If any of above options are missing, the script prompts you all needed parameters:
 
     Your application name: evonove
-    Set a password for a new user:
-    Repeat for confirmation:
     FQDN for app server deployment: evonove.it
     Choose a Python version: 3.4.1
-    Do I need to create a user in postgres with a database? [Y/n]: Y
+    Set a password for the user:
+    Repeat for confirmation:
+    Create a user in PostgreSQL with a database (if available)? [Y/n]: Y
 
     ---
 
@@ -166,7 +166,9 @@ If any of above options are missing, the script prompts you all needed parameter
     Database creation: True
     Do you want to continue? [y/N]: Y
 
-**Note:** If you want to skip any wsgi configuration, `Your application name` should be your repository name.
+**Note about PostgreSQL user creation**: password is the same as the user password.
+
+**Note about application name:** If you want to skip any wsgi configuration, `Your application name` should be your repository name.
 
 Manage supervisor
 -----------------
