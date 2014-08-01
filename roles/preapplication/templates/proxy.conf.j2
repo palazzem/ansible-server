@@ -1,5 +1,5 @@
 upstream {{ app_name }} {
-    server unix:/tmp/{{ app_name }}.sock fail_timeout=0;
+    server unix:/home/{{ user_name }}/var/run/{{ app_name }}.sock fail_timeout=0;
 }
 
 server {

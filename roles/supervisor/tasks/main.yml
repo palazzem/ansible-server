@@ -5,7 +5,7 @@
   pip: name=supervisor virtualenv=~/.virtualenvs/{{ supervisord_virtualenv }}
 
 - name: Create some useful directories to store bins, configurations and logs
-  file: path=/home/{{ user_name }}{{item}} owner={{ user_name }} group={{ user_name }} mode=0700 state=directory
+  file: path=/home/{{ user_name }}{{item}} owner={{ user_name }} group={{ user_name }} mode=0755 state=directory
   with_items:
    - /bin
    - /etc
