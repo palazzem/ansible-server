@@ -8,11 +8,8 @@
     - libselinux-python
     - vim
 
-- name: Import EPEL Repository
-  copy: src=epel.repo dest=/etc/yum.repos.d/epel.repo
-
-- name: Create the GPG key for EPEL
-  copy: src=RPM-GPG-KEY-EPEL-6 dest=/etc/pki/rpm-gpg
+- name: Adding EPEL Repository
+  yum: name=epel-release state=latest
 
 - name: Updating to latest kernel
   yum: name={{item}} state=latest
