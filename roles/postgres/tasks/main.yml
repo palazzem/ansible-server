@@ -9,30 +9,30 @@
     - { insertafter: '^\[base\]$', line: 'exclude=postgresql* # Disable postgres for base' }
     - { insertafter: '^\[updates\]$', line: 'exclude=postgresql* # Disable postgres for updates' }
 
-- name: Enabling Postgresql 9.3 repository [Download]
-  get_url: url=http://yum.postgresql.org/9.3/redhat/rhel-6-x86_64/pgdg-centos93-9.3-1.noarch.rpm dest=/tmp/pgdg-centos93-9.3-1.noarch.rpm
+- name: Enabling Postgresql 9.4 repository [Download]
+  get_url: url=http://yum.postgresql.org/9.4/redhat/rhel-6-x86_64/pgdg-centos94-9.4-1.noarch.rpm dest=/tmp/pgdg-centos94-9.4-1.noarch.rpm
 
-- name: Enabling Postgresql 9.3 repository [Install]
-  yum: name=/tmp/pgdg-centos93-9.3-1.noarch.rpm state=present
+- name: Enabling Postgresql 9.4 repository [Install]
+  yum: name=/tmp/pgdg-centos94-9.4-1.noarch.rpm state=present
 
 - name: Installing postgresql server
   yum: pkg={{item}} state=present
   with_items:
-    - postgresql93-server
-    - postgresql93-devel
+    - postgresql94-server
+    - postgresql94-devel
     - python-psycopg2
 
 - name: Database initialization
   shell:
     executable=/bin/bash
-    creates=/var/lib/pgsql/9.3/data/pg_hba.conf
-    /usr/pgsql-9.3/bin/postgresql93-setup initdb
+    creates=/var/lib/pgsql/9.4/data/pg_hba.conf
+    /usr/pgsql-9.4/bin/postgresql94-setup initdb
 
 - name: Starting postgresql service
-  service: name=postgresql-9.3 state=started
+  service: name=postgresql-9.4 state=started
 
 - name: Starting postgresql on boot
-  service: name=postgresql-9.3 enabled=yes
+  service: name=postgresql-9.4 enabled=yes
 
 - name: Configuring postgres user
   ignore_errors: yes
@@ -42,7 +42,7 @@
   notify: restart postgres
 
 - name: Copying default configuration files
-  copy: src=pg_hba.conf dest=/var/lib/pgsql/9.3/data/pg_hba.conf owner=postgres group=postgres mode=0600 backup=yes
+  copy: src=pg_hba.conf dest=/var/lib/pgsql/9.4/data/pg_hba.conf owner=postgres group=postgres mode=0600 backup=yes
   notify: restart postgres
 
 - name: Add bin folder to env $PATH
