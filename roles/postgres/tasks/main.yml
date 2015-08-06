@@ -16,7 +16,7 @@
   yum: name=/tmp/pgdg-centos94-9.4-1.noarch.rpm state=present
 
 - name: Installing postgresql server
-  yum: pkg={{item}} state=present
+  yum: name={{item}} state=present
   with_items:
     - postgresql94-server
     - postgresql94-devel
